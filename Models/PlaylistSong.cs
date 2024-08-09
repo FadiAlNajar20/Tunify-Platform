@@ -1,4 +1,4 @@
-﻿namespace Tunify_Platform.Models
+﻿namespace Tunify_Platform
 {
     public class PlaylistSong
     {
