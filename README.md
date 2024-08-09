@@ -88,6 +88,17 @@ The `TunifyDBContext` class is responsible for configuring the database and the 
 - **Song configuration**: Sets up the many-to-one relationships with Artists and Albums.
 - **Seed initial data**: Seeds the database with initial data for Users, Subscriptions, Songs, Artists, Albums, Playlists, and PlaylistSongs.
 
+## Implementing the Repository Pattern
+Step 1: Define Repository Interfaces
+Create a folder named Repositories with subfolders Interfaces and Services.
+
+Step 2: Implement Repository Services.
+
+Step 3: Refactor Controllers
+Refactor your controllers to use repository services instead of direct DbContext calls.
+
+Step 4: Register Repositories in Program.cs
+
 ## Conclusion
 
 The Tunify Platform is designed to provide a rich and organized music streaming

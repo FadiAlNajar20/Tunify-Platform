@@ -8,13 +8,18 @@ namespace Tunify_Platform
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddControllers();
+            string ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
-            //string ConnectionStringVar = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<TunifyDBContext>(optionsX => optionsX.UseSqlServer(ConnectionString));
 
-            //builder.Services.AddDbContext<TunifyDBContext>(optionsX => optionsX.UseSqlServer(ConnectionStringVar));
-
-
+            builder.Services.AddScoped<IUser, UserService>();
+            builder.Services.AddScoped<IArtist, ArtistService>();
+            builder.Services.AddScoped<IPlaylist, PlaylistService>();
+            builder.Services.AddScoped<ISong, SongService>();
+            
             var app = builder.Build();
+            app.MapControllers();
 
             app.MapGet("/", () => "Hello World!");
 

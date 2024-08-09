@@ -1,27 +1,35 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Tunify_Platform.Models;
+using Tunify_Platform;
 
 namespace Tunify_Platform.Data
 {
     public class TunifyDBContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-
-        public TunifyDBContext() : base()
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
+        public DbSet<Song> Songs { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Artist> Artists { get; set; }
+        public DbSet<PlaylistSong> PlaylistSongs { get; set; }
+        public TunifyDBContext(DbContextOptions<TunifyDBContext> options) : base(options)
         {
-
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+        //public TunifyDBContext() : base()
+        //{
 
-            var connectionString = config.GetSection("DefaultConnection").Value;
+        //}
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    base.OnConfiguring(optionsBuilder);
+        //    var config = new ConfigurationBuilder()
+        //        .AddJsonFile("appsettings.json")
+        //        .Build();
 
-            optionsBuilder.UseSqlServer(connectionString);
-        }
+        //    var connectionString = config.GetSection("DefaultConnection").Value;
+
+        //    optionsBuilder.UseSqlServer(connectionString);
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
