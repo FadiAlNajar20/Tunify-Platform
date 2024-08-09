@@ -12,9 +12,7 @@ namespace Tunify_Platform.Data
         public DbSet<Album> Albums { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<PlaylistSong> PlaylistSongs { get; set; }
-        public TunifyDBContext(DbContextOptions<TunifyDBContext> options) : base(options)
-        {
-        }
+        public TunifyDBContext(DbContextOptions<TunifyDBContext> options) : base(options){}
         //public TunifyDBContext() : base()
         //{
 
