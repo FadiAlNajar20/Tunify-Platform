@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using Tunify_Platform.Data;
 
 namespace Tunify_Platform
@@ -8,10 +9,18 @@ namespace Tunify_Platform
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
+
+            // Configure JSON options to handle object cycles
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                });
+
             string ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
             builder.Services.AddDbContext<TunifyDBContext>(optionsX => optionsX.UseSqlServer(ConnectionString));
+
 
             builder.Services.AddScoped<IUser, UserService>();
             builder.Services.AddScoped<IArtist, ArtistService>();
