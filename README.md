@@ -99,6 +99,24 @@ Refactor your controllers to use repository services instead of direct DbContext
 
 Step 4: Register Repositories in Program.cs
 
+## Navigation and Routing Functionalities
+
+### Navigation
+
+In this lab, advanced navigation features have been added to enhance user experience and facilitate smooth transitions between different parts of the application. Key improvements include:
+
+- **Dynamic Navigation**: Users can now navigate between different pages dynamically based on the content and context. This includes linking to specific playlists, viewing detailed information about songs, and accessing artist profiles directly from playlists and songs.
+
+- **Breadcrumb Navigation**: Breadcrumbs have been implemented to help users keep track of their location within the application and easily navigate back to previous pages or sections.
+
+### Routing
+
+Routing functionality has been extended to support more complex URL patterns and navigation scenarios:
+
+- **Parameterized Routes**: Routes now support parameters, allowing users to navigate to specific resources, such as viewing a playlist by its ID or an artist by their name.
+
+- **Nested Routing**: The application now supports nested routes, which allow for hierarchical navigation and better organization of related content, such as songs within a playlist or albums within an artist's profile.
+
 ## Conclusion
 
 The Tunify Platform is designed to provide a rich and organized music streaming
