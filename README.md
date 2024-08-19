@@ -117,6 +117,62 @@ Routing functionality has been extended to support more complex URL patterns and
 
 - **Nested Routing**: The application now supports nested routes, which allow for hierarchical navigation and better organization of related content, such as songs within a playlist or albums within an artist's profile.
 
+
+## Swagger UI Integration
+
+In this lab, we extended the Tunify Platform by adding API documentation using Swagger UI. Swagger UI allows you to automatically generate and visualize the API's documentation, making it easier to understand and test the API endpoints.
+
+### Setting Up Swagger UI
+
+To set up Swagger UI in the Tunify Platform, follow these steps:
+
+1. **Install Swashbuckle.AspNetCore**
+   - Open the NuGet Package Manager Console.
+   - Run the following command to install the Swashbuckle.AspNetCore package:
+     ```
+     Install-Package Swashbuckle.AspNetCore
+     ```
+
+2. **Configure Swagger in the Startup Class**
+   - Add Swagger services in the `Program.cs` file:
+     ```csharp
+     builder.Services.AddSwaggerGen(options =>
+     {
+         options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+         {
+             Title = "Tunify API",
+             Version = "v1",
+             Description = "API for managing playlists, songs, and artists in the Tunify Platform"
+         });
+     });
+     ```
+   - Enable Swagger and Swagger UI in the `Program.cs` class:
+     ```csharp
+     app.UseSwagger(options =>
+     {
+         options.RouteTemplate = "api/{documentName}/swagger.json";
+     });
+
+     app.UseSwaggerUI(options =>
+     {
+         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Tunify API v1");
+         options.RoutePrefix = "";
+     });
+     ```
+
+3. **Test Your Swagger UI**
+   - Launch the application.
+   - Navigate to the root URL (e.g., `http://localhost:5000/`) to view the Swagger UI.
+   - Use the Swagger UI to interact with the API endpoints, test functionality, and ensure that all endpoints are documented correctly.
+
+### Accessing and Using Swagger UI
+
+After setting up Swagger, you can access the Swagger UI by navigating to the root URL of your application. The Swagger UI provides a user-friendly interface where you can:
+
+- **Explore API Endpoints**: View all available API endpoints, including the HTTP methods and parameters.
+- **Test API Endpoints**: Use the built-in form to test API calls directly from the browser.
+- **View API Documentation**: Read detailed documentation for each API endpoint, including descriptions, request formats, and response formats.
+
 ## Conclusion
 
 The Tunify Platform is designed to provide a rich and organized music streaming
