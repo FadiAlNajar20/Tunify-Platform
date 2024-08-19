@@ -62,7 +62,7 @@ namespace Tunify_Platform.Controllers
             var deletedEmployee = _playlist.DeleteAsync(id);
             return Ok(deletedEmployee);
         }
-
+        // POST: api/playlists/{playlistId}/songs/{songId}
         [HttpPost("{playlistId}/songs/{songId}")]
         public async Task<IActionResult> AddSongToPlaylist(int playlistId, int songId)
         {
