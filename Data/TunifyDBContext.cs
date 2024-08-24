@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Tunify_Platform;
+using Tunify_Platform.Models;
 
 namespace Tunify_Platform.Data
 {
-    public class TunifyDBContext : DbContext
+    public class TunifyDBContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<ModelUser> ModelUsers { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Song> Songs { get; set; }
@@ -13,24 +16,10 @@ namespace Tunify_Platform.Data
         public DbSet<Artist> Artists { get; set; }
         public DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public TunifyDBContext(DbContextOptions<TunifyDBContext> options) : base(options){}
-        //public TunifyDBContext() : base()
-        //{
-
-        //}
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-        //    var config = new ConfigurationBuilder()
-        //        .AddJsonFile("appsettings.json")
-        //        .Build();
-
-        //    var connectionString = config.GetSection("DefaultConnection").Value;
-
-        //    optionsBuilder.UseSqlServer(connectionString);
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             #region PlaylistSong configuration
             modelBuilder.Entity<PlaylistSong>()
@@ -49,7 +38,7 @@ namespace Tunify_Platform.Data
 
             #region Subscription configuration
             modelBuilder.Entity<Subscription>()
-                .HasMany(s => s.Users)
+                .HasMany(s => s.ModelUsers)
                 .WithOne(u => u.Subscription)
                 .HasForeignKey(u => u.SubscriptionID);
 
@@ -59,10 +48,10 @@ namespace Tunify_Platform.Data
             #endregion
 
             #region User configuration
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<ModelUser>()
                 .HasMany(u => u.Playlists)
                 .WithOne(p => p.User)
-                .HasForeignKey(p => p.UserID);
+                .HasForeignKey(p => p.ModelUserID);
             #endregion
 
             #region Artist configuration
@@ -94,9 +83,9 @@ namespace Tunify_Platform.Data
             #endregion
 
             #region Seed initial data
-            modelBuilder.Entity<User>().HasData(
-                new User { UserID = 1, Username = "user1", Email = "user1@example.com", JoinDate = DateTime.Now, SubscriptionID = 1 },
-                new User { UserID = 2, Username = "user2", Email = "user2@example.com", JoinDate = DateTime.Now, SubscriptionID = 1 }
+            modelBuilder.Entity<ModelUser>().HasData(
+                new ModelUser { ModelUserID = 1, Username = "user1", Email = "user1@example.com", JoinDate = DateTime.Now, SubscriptionID = 1 },
+                new ModelUser { ModelUserID = 2, Username = "user2", Email = "user2@example.com", JoinDate = DateTime.Now, SubscriptionID = 1 }
             );
 
             modelBuilder.Entity<Subscription>().HasData(
@@ -118,8 +107,8 @@ namespace Tunify_Platform.Data
             );
 
             modelBuilder.Entity<Playlist>().HasData(
-                new Playlist { PlaylistID = 1, UserID = 1, PlaylistName = "Playlist 1", CreatedDate = DateTime.Now },
-                new Playlist { PlaylistID = 2, UserID = 2, PlaylistName = "Playlist 2", CreatedDate = DateTime.Now }
+                new Playlist { PlaylistID = 1, ModelUserID = 1, PlaylistName = "Playlist 1", CreatedDate = DateTime.Now },
+                new Playlist { PlaylistID = 2, ModelUserID = 2, PlaylistName = "Playlist 2", CreatedDate = DateTime.Now }
             );
 
             modelBuilder.Entity<PlaylistSong>().HasData(

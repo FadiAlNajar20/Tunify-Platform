@@ -173,6 +173,48 @@ After setting up Swagger, you can access the Swagger UI by navigating to the roo
 - **Test API Endpoints**: Use the built-in form to test API calls directly from the browser.
 - **View API Documentation**: Read detailed documentation for each API endpoint, including descriptions, request formats, and response formats.
 
+### Identity:
+This section covers the Identity Management implementation in the Tunify Platform. It includes user authentication, role management, and session handling using ASP.NET Core Identity.
+
+Features
+User Registration: Allows new users to sign up with their details.
+User Login and Logout: Provides authentication and session management for users.
+Role Management: Supports user roles and claims for authorization.
+Session Management: Handles user sessions and token-based authentication.
+Integrating ASP.NET Core Identity
+Install Package
+
+Install the Microsoft.AspNetCore.Identity.EntityFrameworkCore package.
+Ensure other required packages (e.g., Microsoft.EntityFrameworkCore.SqlServer) are also installed if using SQL Server.
+Extend AppDbContext
+
+Ensure AppDbContext extends IdentityDbContext<IdentityUser>.
+Create DTOs
+
+Create Data Transfer Objects (DTOs) for user management, such as RegisterDto and LoginDto.
+Create the Interface
+
+Define an interface (e.g., IAccount) for account-related operations.
+Create the Service
+
+Implement the service (e.g., IdentityAccountService) that adheres to the IAccount interface and handles authentication logic.
+Create the Controller
+
+Implement a controller that handles registration, login, and optionally password management.
+Update Program.cs
+
+Add the following services and configuration:
+builder.Services.AddScoped<IAccount, IdentityAccountService>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
+app.UseAuthentication();
+Run Migrations
+
+Execute the following commands to create and apply migrations:
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+This guide provides the steps needed to set up ASP.NET Core Identity in your project, covering installation, configuration, and database setup.
+
 ## Conclusion
 
 The Tunify Platform is designed to provide a rich and organized music streaming
