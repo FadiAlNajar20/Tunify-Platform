@@ -4,10 +4,10 @@ namespace Tunify_Platform
 {
     public interface IUser
     {
-        Task<User> GetUserByIdAsync(int id);
-        Task<List<User>> GetAllUsersAsync();
-        Task<User> AddUserAsync(User user);
-        Task<User> UpdateUserAsync(int id, User user);
+        Task<ModelUser> GetUserByIdAsync(int id);
+        Task<List<ModelUser>> GetAllUsersAsync();
+        Task<ModelUser> AddUserAsync(ModelUser user);
+        Task<ModelUser> UpdateUserAsync(int id, ModelUser user);
         Task DeleteUserAsync(int id);
     }
 }

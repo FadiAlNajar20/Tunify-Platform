@@ -12,24 +12,24 @@ namespace Tunify_Platform
                 _context = context;
             }
 
-            public async Task<List<User>> GetAllUsersAsync()
+            public async Task<List<ModelUser>> GetAllUsersAsync()
             {
-                var allUsers = await _context.Users.ToListAsync();
+                var allUsers = await _context.ModelUsers.ToListAsync();
                 return allUsers;
             }
 
-            public async Task<User> GetUserByIdAsync(int id) => await _context.Users.FindAsync(id);
+            public async Task<ModelUser> GetUserByIdAsync(int id) => await _context.ModelUsers.FindAsync(id);
 
-            public async Task<User> AddUserAsync(User User)
+            public async Task<ModelUser> AddUserAsync(ModelUser User)
             {
-                _context.Users.Add(User);
+                _context.ModelUsers.Add(User);
                 await _context.SaveChangesAsync();
                 return User;
             }
 
-            public async Task<User> UpdateUserAsync(int id, User User)
+            public async Task<ModelUser> UpdateUserAsync(int id, ModelUser User)
             {
-                var exsitingEmployee = await _context.Users.FindAsync(id);
+                var exsitingEmployee = await _context.ModelUsers.FindAsync(id);
                 exsitingEmployee = User;
                 await _context.SaveChangesAsync();
                 return User;

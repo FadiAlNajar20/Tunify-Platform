@@ -1,8 +1,8 @@
 ﻿namespace Tunify_Platform
 {
-    public class User
+    public class ModelUser
     {
-        public int UserID { get; set; }
+        public int ModelUserID { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public DateTime JoinDate { get; set; }
