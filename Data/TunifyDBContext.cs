@@ -21,6 +21,36 @@ namespace Tunify_Platform.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            string adminRoleId = Guid.NewGuid().ToString();
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN" }
+            );
+
+            // Create a default admin user
+            string adminUserId = Guid.NewGuid().ToString();
+            var adminUser = new ApplicationUser
+            {
+                Id = adminUserId,
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@tunify.com",
+                NormalizedEmail = "ADMIN@TUNIFY.COM",
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            var passwordHasher = new PasswordHasher<ApplicationUser>();
+            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, "Admin@123");
+
+            modelBuilder.Entity<ApplicationUser>().HasData(adminUser);
+
+            // Assign role to admin user
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = adminRoleId,
+                UserId = adminUserId
+            });
+
             #region PlaylistSong configuration
             modelBuilder.Entity<PlaylistSong>()
                 .HasKey(ps => ps.PlaylistSongID);
